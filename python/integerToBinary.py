@@ -1,6 +1,6 @@
 from stack import Stack
 
-ef divBy2(decimalNum):
+def divBy2(decimalNum):
     s = Stack()
     
     while decimalNum > 0:
@@ -16,4 +16,4 @@ ef divBy2(decimalNum):
     return binaryNum
 
 
-print(divBy2(242)
+print(divBy2(242))

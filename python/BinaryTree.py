@@ -1,3 +1,34 @@
+# Binary Tree Implementation with different
+#  traversals types
+
+
+
+# Stack dataStructure class
+class Stack(object):
+    def __init__(self):
+        self.items = []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        if not self.is_empty():
+            return self.items.pop()
+
+    def peek(self):
+        if not self.is_empty():
+            return self.items[-1]
+    
+    def size(self):
+        return len(self.items)
+    
+    def __len__(self):
+        return self.size()
+    
+    def is_empty(self):
+        return len(self.items) == 0
+
+
 #Class Queue
 class Queue(object):
     def __init__(self):
@@ -51,8 +82,11 @@ class BinaryTree(object):
             return self.levelOrder_print(tree.root)
         elif traversal_type == "levelorder":
             return self.levelOrder_print(tree.root)
+        elif traversal_type == "reverseLeveOrder":
+            return self.reverselevel_print(tree.root)
         else:
-            print("Traversal type " + str(traversal_type) + " is not supported")
+            print("Traversal type " + str(traversal_type) 
+            + " is not supported")
             return False
 
 #Method Pre-Order traversal 
@@ -81,6 +115,7 @@ class BinaryTree(object):
             traversal =  self.inOrder_print(start.right, traversal)
             traversal += (str(start.value) + "-")
         return traversal
+
 #Method for level order traversal
     def levelOrder_print(self, start):
         if start is None:
@@ -98,6 +133,35 @@ class BinaryTree(object):
                 queue.enqueue(node.left)
             if node.right:
                 queue.enqueue(node.right)
+        
+        return traversal
+
+#Reverse Level order traversal
+#I used stack and queue data structures to implement
+#reverse-level-order traversal BinaryTree
+#
+
+    def reverselevel_print(self, start):
+        if start is None:
+            return
+        
+        queue = Queue()
+        stack = Stack()
+        queue.enqueue(start)
+
+        traversal = ""
+        while len(queue) > 0:
+            node = queue.dequeue()
+            stack.push(node)
+
+            if node.right:
+                queue.enqueue(node.right)
+            if node.left:
+                queue.enqueue(node.left)
+        
+        while len(stack) > 0:
+            node = stack.pop()
+            traversal += str(node.value) + "-"
         return traversal
 
 #Main function
@@ -113,7 +177,8 @@ tree.root.right.right.right = Node(8)
 
 
 #print tree in different trversals
-print(tree.print_tree("preorder"))
-print(tree.print_tree("postOrder"))
-print(tree.print_tree("inorder"))
-print(tree.print_tree("levelorder"))
+print("Pre-order\t" + tree.print_tree("preorder"))
+print("Post-order\t" + tree.print_tree("postOrder"))
+print("In-order\t" + tree.print_tree("inorder"))
+print("Level-order\t" + tree.print_tree("levelorder"))
+print("Reverse-Level-order " + tree.print_tree("reverseLeveOrder"))
